@@ -1,0 +1,42 @@
+.stackCommerceClearfix {
+  clear: both;
+}
+
+.stackCommerceBox-sizing(@border) {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@grid-columns : 12;
+
+@grid-column-padding : 10px;
+
+.stackCommerceMake-row() {
+  // Negative margin the row out to align the content of columns
+  margin-left: -@grid-column-padding;
+  margin-right: -@grid-column-padding;
+  // Then clear the floated columns
+  .stackCommerceClearfix();
+}
+
+.stackCommerceMake-column(@columns) {
+  @media (min-width: 100px) {
+    float: left;
+    // Calculate width based on number of columns available
+    width: percentage(@columns / @grid-columns);
+  }
+  // Prevent columns from collapsing when empty
+  min-height: 1px;
+  // Set inner padding as gutters instead of margin
+  padding-left: @grid-column-padding;
+  padding-right: @grid-column-padding;
+  // Proper box-model (padding doesn't add to width)
+  .stackCommerceBox-sizing(border-box);
+}
+
+.make-column-offset(@columns) {
+  @media (min-width: @grid-float-breakpoint) {
+    margin-left: percentage(@columns / @grid-columns);
+  }
+}
